@@ -21,9 +21,8 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         with(binding) {
             setContentView(root)
-            idTextView.setText(getString(R.string.helloworld))
             val helloAsLink = "Hello"
-            idTextView.addLink(Pair(helloAsLink,View.OnClickListener {
+            idTextView.addLink(Pair(helloAsLink, View.OnClickListener {
                 helloAsLink.showToast()
             }))
         }
@@ -48,14 +47,12 @@ private fun TextView.addLink(vararg text: Pair<String, View.OnClickListener>) {
         }
         startIndex = this.text.toString().indexOf(txt.first, startIndex + 1)
 
-        if (startIndex == -1) {
-            spanningString.setSpan(
-                clickableSpan,
-                startIndex,
-                startIndex + txt.first.length,
-                Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-        }
+        spanningString.setSpan(
+            clickableSpan,
+            startIndex,
+            startIndex + txt.first.length,
+            Spanned.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
     }
     this.movementMethod = LinkMovementMethod.getInstance()
     this.setText(spanningString, TextView.BufferType.SPANNABLE)
