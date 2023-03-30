@@ -19,11 +19,10 @@ import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.delay
 import javax.inject.Inject
-//Task #3 - Recurring work implementation
 /**
- * The only issue that we have come across is the case where some Chinese OEMs treat swipe to dismiss from Recents as a force stop. When that happens, WorkManager will reschedule all pending jobs, next time the app starts up. Given that this is a CDD violation, there is not much more that WorkManager can do given its a client library. source
- */
-/**
+ * The only issue that we have come across is the case where some Chinese OEMs treat swipe to dismiss from Recents as a force stop. When that happens, WorkManager will reschedule all pending jobs, next time the app starts up. Given that this is a CDD violation, there is not much more that WorkManager can do given its a client library.
+ *
+ * Task #3 - Recurring work implementation
  * Using Fuse location service because it is efficient way of collecting location data in background recommend by google docs.
  */
 @HiltWorker
