@@ -30,7 +30,12 @@ class LocationViewModel @Inject constructor(
         const val LOCATION_WORK_TAG = "LOCATION_WORK_TAG"
     }
 
-    //Initiate a work manager periodically and buildconfig will decide either to run it on 20min or 60min
+    /**
+     * Task #2 - Actions: Scheduling work
+     * Initiate a work manager periodically and buildconfig will decide either to run it on 20min or 60min
+     * Using WorkManager for recurring task for data persistence upon reboot and app kill.
+     */
+
     private fun trackLocationWithWorkManager() {
         val repeatInterval : Int = com.example.digitalenvoy.BuildConfig.PERIODIC_INTERVAL
         val locationWorker = PeriodicWorkRequestBuilder<LocationWorker>(

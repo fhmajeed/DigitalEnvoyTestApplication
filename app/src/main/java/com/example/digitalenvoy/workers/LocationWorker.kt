@@ -24,7 +24,6 @@ import javax.inject.Inject
  * The only issue that we have come across is the case where some Chinese OEMs treat swipe to dismiss from Recents as a force stop. When that happens, WorkManager will reschedule all pending jobs, next time the app starts up. Given that this is a CDD violation, there is not much more that WorkManager can do given its a client library. source
  */
 /**
- * Using WorkManager for recurring task for data persistence upon reboot and app kill.
  * Using Fuse location service because it is efficient way of collecting location data in background recommend by google docs.
  */
 @HiltWorker
@@ -63,12 +62,11 @@ class LocationWorker @AssistedInject constructor(
                 ContextCompat.getMainExecutor(applicationContext).execute {
                     Toast.makeText(applicationContext, locationToToast, Toast.LENGTH_LONG).show()
                     //TODO Task #4 - Local storage options
-                    // we could save the location data to room db and or we could store the data in cloud by making a API or File-ing with parcelable object
+                    // we could save the location data to room db and or we could store the data in cloud by making a API
                 }
 
                 val notification = notificationBuilder.build()
                 notificationManager.notify(1001, notification)
-                //setForeground(ForegroundInfo(NOTIFICATION_ID, notification))
                 Log.d(LocationWorker::class.simpleName, locationToToast)
                 Result.success()
             }
@@ -91,7 +89,6 @@ class LocationWorker @AssistedInject constructor(
         val channel = NotificationChannel(CHANNEL_ID, TITLE, importance)
         notificationManager.createNotificationChannel(channel)
     }
-
 
     companion object {
         const val CHANNEL_ID = "location_channel"
