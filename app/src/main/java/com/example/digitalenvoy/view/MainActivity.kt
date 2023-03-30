@@ -1,24 +1,41 @@
-package com.example.digitalenvoy
+package com.example.digitalenvoy.view
 
-import androidx.appcompat.app.AppCompatActivity
+import android.Manifest.permission.ACCESS_COARSE_LOCATION
+import android.Manifest.permission.ACCESS_FINE_LOCATION
+import android.app.Notification
+import android.app.PendingIntent
+import android.content.Intent
+import android.os.Build
 import android.os.Bundle
-import android.text.*
+import android.text.Selection
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.Spanned
 import android.text.method.LinkMovementMethod
 import android.text.style.ClickableSpan
 import android.view.View
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.text.set
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.example.digitalenvoy.databinding.ActivityMainBinding
-import org.w3c.dom.Text
+import com.example.digitalenvoy.viewmodels.LocationViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private lateinit var checkLocationPermission: ActivityResultLauncher<Array<String>>
+    private lateinit var viewModel: LocationViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
+        viewModel = ViewModelProvider(this)[LocationViewModel::class.java]
+
         with(binding) {
             setContentView(root)
             val helloAsLink = "Hello"
@@ -26,6 +43,15 @@ class MainActivity : AppCompatActivity() {
                 helloAsLink.showToast()
             }))
         }
+
+        checkLocationPermission =
+            registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { perm ->
+                if (perm[ACCESS_FINE_LOCATION] == true || perm[ACCESS_COARSE_LOCATION] == true) {
+                    viewModel.locationSetup()
+                }
+            }
+
+        checkLocationPermission.launch(arrayOf(ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION))
     }
 
     private fun String.showToast() {
@@ -33,6 +59,9 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
+/**
+ * Task # 1 Added link for keyword base click_listener
+ */
 private fun TextView.addLink(vararg text: Pair<String, View.OnClickListener>) {
     val spanningString = SpannableString(this.text)
     var startIndex = -1
