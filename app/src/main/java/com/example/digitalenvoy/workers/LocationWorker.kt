@@ -63,7 +63,7 @@ class LocationWorker @AssistedInject constructor(
                 ContextCompat.getMainExecutor(applicationContext).execute {
                     Toast.makeText(applicationContext, locationToToast, Toast.LENGTH_LONG).show()
                     //TODO Task #4 - Local storage options
-                    // we could save the location data to room db and or we could store the data in cloud by making a API
+                    // we could save the location data to room db and or we could store the data in cloud by making a API or File-ing with parcelable object
                 }
 
                 val notification = notificationBuilder.build()
