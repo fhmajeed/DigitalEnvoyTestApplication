@@ -60,7 +60,8 @@ class MainActivity : AppCompatActivity() {
 }
 
 /**
- * Task # 1 Added link for keyword base click_listener
+ * Task #1 - Triggering action when user taps a single word
+ * Added link for keyword base click_listener
  */
 private fun TextView.addLink(vararg text: Pair<String, View.OnClickListener>) {
     val spanningString = SpannableString(this.text)
